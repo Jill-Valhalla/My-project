@@ -4,10 +4,13 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//public enum AttackState {Idle, Windup, Impact, Cooldown}
+public enum AttackState {Idle, Windup, Impact, Cooldown}
 
 public class MeeleFighter : MonoBehaviour
 {
+    [SerializeField] GameObject sword;
+
+    BoxCollider swordCollider;
     
     Animator animator;
 
@@ -16,6 +19,21 @@ public class MeeleFighter : MonoBehaviour
         animator = GetComponent<Animator>();
         
     }
+
+    private void Start()
+    {
+        if(sword != null)
+        {
+            swordCollider = sword.GetComponent<BoxCollider>();
+            
+            swordCollider.enabled = false;
+            
+        }
+    }
+
+
+
+    AttackState attackState;
 
     public bool InAction { get; private set; } = false;
 
@@ -30,13 +48,49 @@ public class MeeleFighter : MonoBehaviour
     IEnumerator Attack()
     {
         InAction = true;
+        attackState = AttackState.Windup;
+
+        float impactStartTime = 0.33f;
+        float impactEndTime = 0.55f;
+
         animator.CrossFade("Slash", 0.2f);
         yield return null;
 
         var animState =  animator.GetNextAnimatorStateInfo(1);
 
-        yield return new WaitForSeconds(animState.length);
+        float timer = 0f;
+        while(timer <= animState.length)
+        {
+            timer += Time.deltaTime;
+            float normalizedTime = timer / animState.length;
 
+            if(attackState == AttackState.Windup)
+            {
+                if(normalizedTime >= impactStartTime)
+                {
+                    attackState = AttackState.Impact;
+                    swordCollider.enabled = true;
+                }
+            }
+            else if(attackState == AttackState.Impact)
+            {
+                if(normalizedTime >= impactEndTime)
+                {
+                    attackState = AttackState.Cooldown;
+                    swordCollider.enabled = false;
+                }
+            }
+            else if(attackState == AttackState.Cooldown)
+            {
+                // Do nothing special here for now
+            }
+
+            
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(animState.length);
+        attackState = AttackState.Idle;
         InAction = false;
     }
 

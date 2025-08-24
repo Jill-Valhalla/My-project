@@ -550,6 +550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Warrior_Brown
       objectReference: {fileID: 0}
+    - target: {fileID: 175140, guid: 6ff9e4b8027e4b54ba8cccf95fad6052, type: 3}
+      propertyPath: m_TagString
+      value: Hitbox
+      objectReference: {fileID: 0}
     - target: {fileID: 473210, guid: 6ff9e4b8027e4b54ba8cccf95fad6052, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -589,6 +593,10 @@ PrefabInstance:
     - target: {fileID: 473210, guid: 6ff9e4b8027e4b54ba8cccf95fad6052, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7165532789008301404, guid: 6ff9e4b8027e4b54ba8cccf95fad6052, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2292,6 +2300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4882116702272771312, guid: 4bfd2b108096c784091ac5c511980724, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4936754842530562280, guid: 4bfd2b108096c784091ac5c511980724, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.58
@@ -2331,6 +2343,14 @@ PrefabInstance:
     - target: {fileID: 4936754842530562280, guid: 4bfd2b108096c784091ac5c511980724, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537848490949066672, guid: 4bfd2b108096c784091ac5c511980724, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444049859001328534, guid: 4bfd2b108096c784091ac5c511980724, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4586,6 +4606,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7173334664942179616, guid: a3e5b87b6b8e95f46ac6a5a0e11027e2, type: 3}
   m_PrefabInstance: {fileID: 852157419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &854023132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 604932598361255051, guid: 6ff9e4b8027e4b54ba8cccf95fad6052, type: 3}
+  m_PrefabInstance: {fileID: 126202807}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &859573603
 PrefabInstance:
@@ -10649,7 +10674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  rotationSpeed: 200
+  rotationSpeed: 500
   groundCheckRadius: 0.2
   groundCheckOffset: {x: 0, y: 0.1, z: 0.09}
   groundLayer:
@@ -10679,6 +10704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6985e160ec12c4cb55a79682d0c3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sword: {fileID: 854023132}
+  attackState: 0
 --- !u!1001 &1779182476
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10704,8 +10704,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6985e160ec12c4cb55a79682d0c3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 11400000, guid: a8babb5a40aff284aaeca3c4b9da2681, type: 2}
+  - {fileID: 11400000, guid: 49d97759b7e0e414aaebd88f93c1ca1f, type: 2}
+  - {fileID: 11400000, guid: 4225d608db0060846bfbb3888a6367de, type: 2}
   sword: {fileID: 854023132}
-  attackState: 0
 --- !u!1001 &1779182476
 PrefabInstance:
   m_ObjectHideFlags: 0

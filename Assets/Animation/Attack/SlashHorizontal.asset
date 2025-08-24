@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 273ce745f3bb8464ebf2eb3296b57e2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1599fd60ea8fc8047a4170cb246189d9, type: 3}
   m_Name: SlashHorizontal
   m_EditorClassIdentifier: 
   <AnimName>k__BackingField: SlashHorizontal
-  <HitboxToUse>k__BackingField: 4
   <ImpactStartTime>k__BackingField: 0.2
   <ImpactEndTime>k__BackingField: 0.36

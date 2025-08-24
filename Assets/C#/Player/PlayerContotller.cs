@@ -7,6 +7,7 @@ public class PlayerContotller : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float rotationSpeed = 200f;
 
+    [Header("Ground Check Settings")]
     [SerializeField] float groundCheckRadius = 0.2f;
     [SerializeField] Vector3 groundCheckOffset ;
     [SerializeField] LayerMask groundLayer ;

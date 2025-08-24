@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerContotller : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float rotationSpeed = 200f;
+    [SerializeField] float rotationSpeed = 500f;
 
     [Header("Ground Check Settings")]
     [SerializeField] float groundCheckRadius = 0.2f;
@@ -20,15 +20,23 @@ public class PlayerContotller : MonoBehaviour
     CameraController cameraController;
     Animator animator;
     CharacterController characterController;
-   
+    MeeleFighter meeleFighter;
+
     private void Awake()
     {
+
         cameraController = Camera.main.GetComponent<CameraController>();    
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        meeleFighter = GetComponent<MeeleFighter>();
     } 
     private void Update()
     {
+        if (meeleFighter.InAction)
+        {
+            animator.SetFloat("moveAmount", 0f);
+            return;
+        }
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");

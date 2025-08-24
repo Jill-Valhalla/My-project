@@ -39,5 +39,28 @@ public class MeeleFighter : MonoBehaviour
 
         InAction = false;
     }
- 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Hitbox" && !InAction)
+        {
+             StartCoroutine(PlayHitReaction());
+        }
+    }
+
+    IEnumerator PlayHitReaction()
+    {
+        InAction = true;
+
+        animator.CrossFade("SwordImpact", 0.2f);
+        yield return null;
+
+        var animState = animator.GetNextAnimatorStateInfo(1);
+
+        yield return new WaitForSeconds(animState.length);
+
+        InAction = false;
+    }
+
+
 }

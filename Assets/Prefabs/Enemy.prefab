@@ -486,10 +486,8 @@ GameObject:
   - component: {fileID: 7444049859001328534}
   - component: {fileID: 4882116702272771312}
   - component: {fileID: 8484742792425003278}
-  - component: {fileID: 7225120694714695370}
   - component: {fileID: 6348539571254684990}
   - component: {fileID: 5455408736917998688}
-  - component: {fileID: 1552898914018381215}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -552,8 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6985e160ec12c4cb55a79682d0c3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: []
-  sword: {fileID: 0}
 --- !u!143 &4882116702272771312
 CharacterController:
   m_ObjectHideFlags: 0
@@ -587,24 +583,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566214288215555330}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2ef4dc2ea37276479daafe704616c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Fov>k__BackingField: 180
---- !u!114 &7225120694714695370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566214288215555330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fd8349b90650d0439f277254573a700, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &6348539571254684990
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -612,7 +596,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566214288215555330}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -634,28 +618,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566214288215555330}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 931acf096e398df48991c6042ce1f5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1552898914018381215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566214288215555330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60b922665a222584baa46fbcd1b1719f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  circlingSpeed: 20
-  distanceToStand: 3
-  adjustDistanceThreshold: 1
-  idleTimeRange: {x: 2, y: 5}
-  circlingTimeRange: {x: 3, y: 6}
 --- !u!1 &1727811507092900307
 GameObject:
   m_ObjectHideFlags: 0

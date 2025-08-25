@@ -7,25 +7,25 @@ public enum EnemyStates { Idle, Chase }
 
 public class EnemyController : MonoBehaviour
 {
-    //[field:SerializeField] public float Fov { get; private set; } = 180f;
-   // public List<MeeleFighter> TargetsInRange {  get; set; } = new List<MeeleFighter>();
+    [field:SerializeField] public float Fov { get; private set; } = 180f;
+    public List<MeeleFighter> TargetsInRange {  get; set; } = new List<MeeleFighter>();
 
-    //public MeeleFighter Target { get; set; }
+    public MeeleFighter Target { get; set; }
     //public float CombatMovementTimer { get; set; } = 0f;
     public StateMachine<EnemyController> StateMachine {  get; private set; }
 
     Dictionary<EnemyStates, State<EnemyController>> stateDict;
 
-    //public NavMeshAgent NavAgent { get; private set; }  
-    //public Animator Animator { get; private set; }
+    public NavMeshAgent NavAgent { get; private set; }  
+    public Animator Animator { get; private set; }
     //public MeeleFighter Fighter { get; private set; }
     //public VisionSensor VisionSensor { get;  set; }
 
 
     private void Start()
     {
-        //NavAgent = GetComponent<NavMeshAgent>();
-        //Animator = GetComponent<Animator>();
+        NavAgent = GetComponent<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
         //Fighter = GetComponent<MeeleFighter>();
 
         stateDict = new Dictionary<EnemyStates, State<EnemyController>>();

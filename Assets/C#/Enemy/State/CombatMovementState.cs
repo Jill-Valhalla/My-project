@@ -67,7 +67,11 @@ public class CombatMovementState : State<EnemyController>
                 return;
             }
 
-            transform.RotateAround(enemy.Target.transform.position, Vector3.up, circlingDir * circlingSpeed * Time.deltaTime);
+            var vecToTarget = enemy.transform.position - enemy.Target.transform.position;
+            var rotatedPos = Quaternion.Euler(0, circlingSpeed * circlingDir * Time.deltaTime, 0) * vecToTarget;
+
+            enemy.NavAgent.Move(rotatedPos - vecToTarget);
+            enemy.transform.rotation = Quaternion.LookRotation(-rotatedPos);
 
         }
 
@@ -86,7 +90,7 @@ public class CombatMovementState : State<EnemyController>
         state = AICombatStates.Chase;
 
         enemy.Animator.SetBool("combatMode", false);
-        enemy.Animator.SetBool("circling", false);
+        
     }
 
     void StartIdle()
@@ -95,19 +99,20 @@ public class CombatMovementState : State<EnemyController>
         timer = Random.Range(idleTimeRange.x, idleTimeRange.y);
 
         enemy.Animator.SetBool("combatMode", true);
-        enemy.Animator.SetBool("circling", false);
+        
 
     }
 
     void StartCircling()
     {
         state = AICombatStates.Circling;
+
+        enemy.NavAgent.ResetPath();
         timer = Random.Range(circlingTimeRange.x, circlingTimeRange.y);
 
         circlingDir = Random.Range(0, 2) == 0 ? 1 : -1;
 
-        enemy.Animator.SetBool("circling", true);
-        enemy.Animator.SetFloat("circlingDir", circlingDir);
+
     }
 
 

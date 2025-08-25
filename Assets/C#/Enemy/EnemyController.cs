@@ -55,19 +55,18 @@ public class EnemyController : MonoBehaviour
     {
         StateMachine.Execute();
 
-        Animator.SetFloat("moveAmount", NavAgent.velocity.magnitude / NavAgent.speed);
+        var deltaPos = transform.position - prevPos;
+        var velocity = deltaPos / Time.deltaTime;
 
-        //var deltaPos = transform.position - prevPos;
-        //var velocity = deltaPos/Time.deltaTime;
+        float forwardSpeed = Vector3.Dot(velocity, transform.forward);
+        //Animator.SetFloat("moveAmount", NavAgent.velocity.magnitude / NavAgent.speed, 0.2f, Time.deltaTime);
+        Animator.SetFloat("forwardSpeed", forwardSpeed / NavAgent.speed, 0.2f, Time.deltaTime);
 
-        //float forwardSpeed = Vector3.Dot(velocity, transform.forward);
-        //Animator.SetFloat("forwardSpeed", forwardSpeed / NavAgent.speed, 0.2f, Time.deltaTime);
+        float angle = Vector3.SignedAngle(transform.forward, velocity, Vector3.up);
+        float strafeSpeed = Mathf.Sin(angle * Mathf.Deg2Rad);
+        Animator.SetFloat("strafeSpeed", strafeSpeed, 0.2f, Time.deltaTime);
 
-        //float angle = Vector3.SignedAngle(transform.forward, velocity, Vector3.up);
-        // float strafeSpeed = Mathf.Sin(angle * Mathf.Deg2Rad);
-        // Animator.SetFloat("strafeSpeed", strafeSpeed, 0.2f, Time.deltaTime);
-
-        //prevPos = transform.position;
+        prevPos = transform.position;
     }
 
 }

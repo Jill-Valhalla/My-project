@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyStates { Idle, Chase }
+public enum EnemyStates { Idle, CombatMovement }
 
 public class EnemyController : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
 
         stateDict = new Dictionary<EnemyStates, State<EnemyController>>();
         stateDict[EnemyStates.Idle] = GetComponent<IdleState>();
-        stateDict[EnemyStates.Chase] = GetComponent<ChaseState>();
+        stateDict[EnemyStates.CombatMovement] = GetComponent<CombatMovementState>();
         //stateDict[EnemyStates.CombatMovement] = GetComponent<CombatMovementState>();
         //stateDict[EnemyStates.Attack] = GetComponent<AttackState>();
         //stateDict[EnemyStates.RetreatAfterAttack] = GetComponent<RetreatAfterAttackState>();
@@ -55,6 +55,8 @@ public class EnemyController : MonoBehaviour
     {
         StateMachine.Execute();
 
+        Animator.SetFloat("moveAmount", NavAgent.velocity.magnitude / NavAgent.speed);
+
         //var deltaPos = transform.position - prevPos;
         //var velocity = deltaPos/Time.deltaTime;
 
@@ -62,8 +64,8 @@ public class EnemyController : MonoBehaviour
         //Animator.SetFloat("forwardSpeed", forwardSpeed / NavAgent.speed, 0.2f, Time.deltaTime);
 
         //float angle = Vector3.SignedAngle(transform.forward, velocity, Vector3.up);
-       // float strafeSpeed = Mathf.Sin(angle * Mathf.Deg2Rad);
-       // Animator.SetFloat("strafeSpeed", strafeSpeed, 0.2f, Time.deltaTime);
+        // float strafeSpeed = Mathf.Sin(angle * Mathf.Deg2Rad);
+        // Animator.SetFloat("strafeSpeed", strafeSpeed, 0.2f, Time.deltaTime);
 
         //prevPos = transform.position;
     }

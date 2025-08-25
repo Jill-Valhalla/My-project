@@ -23,13 +23,13 @@ public class CombatMovementState : State<EnemyController>
     {
         enemy = owner;
 
-        enemy.NavAgent.stoppingDistance = distanceToStand;
+       // enemy.NavAgent.stoppingDistance = distanceToStand;
         //enemy.CombatMovementTimer = 0f;
     }
 
     public override void Execute()
     {
-        if(Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) > distanceToStand + adjustDistanceThreshold)
+        //if(Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) > distanceToStand + adjustDistanceThreshold)
         {
             StartChase();
         }
@@ -50,13 +50,13 @@ public class CombatMovementState : State<EnemyController>
         }
         else if(state == AICombatStates.Chase)
         {
-            if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) <= distanceToStand + 0.05f)
+            //if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) <= distanceToStand + 0.05f)
             {
                 StartIdle();
                 return;
             }
 
-            enemy.NavAgent.SetDestination(enemy.Target.transform.position);
+            //enemy.NavAgent.SetDestination(enemy.Target.transform.position);
         }
         else if(state == AICombatStates.Circling)
         {
@@ -66,11 +66,11 @@ public class CombatMovementState : State<EnemyController>
                 return;
             }
 
-            var vecToTarget = enemy.transform.position - enemy.Target.transform.position;
-            var rotatePos = Quaternion.Euler(0, circlingDir * circlingSpeed * Time.deltaTime, 0) * vecToTarget;
+            //var vecToTarget = enemy.transform.position - enemy.Target.transform.position;
+            //var rotatePos = Quaternion.Euler(0, circlingDir * circlingSpeed * Time.deltaTime, 0) * vecToTarget;
 
-            enemy.NavAgent.Move(rotatePos - vecToTarget);
-            enemy.transform.rotation = Quaternion.LookRotation(-rotatePos);
+            //enemy.NavAgent.Move(rotatePos - vecToTarget);
+            //enemy.transform.rotation = Quaternion.LookRotation(-rotatePos);
         }
 
         if(timer > 0f)
@@ -84,7 +84,7 @@ public class CombatMovementState : State<EnemyController>
     void StartChase()
     {
         state = AICombatStates.Chase;
-        enemy.Animator.SetBool("combatMode", false);
+        //enemy.Animator.SetBool("combatMode", false);
         
     }
 
@@ -93,7 +93,7 @@ public class CombatMovementState : State<EnemyController>
         state = AICombatStates.Idle;
         timer = Random.Range(idleTimeRange.x, idleTimeRange.y);
 
-        enemy.Animator.SetBool("combatMode", true);
+        //enemy.Animator.SetBool("combatMode", true);
         
     }
 
@@ -101,7 +101,7 @@ public class CombatMovementState : State<EnemyController>
     {
         state = AICombatStates.Circling;
 
-        enemy.NavAgent.ResetPath();
+        //enemy.NavAgent.ResetPath();
         timer = Random.Range(circlingTimeRange.x, circlingTimeRange.y);
 
         circlingDir = Random.Range(0, 2) == 0 ? 1 : -1;

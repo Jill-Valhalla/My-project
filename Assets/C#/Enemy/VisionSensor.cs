@@ -15,7 +15,7 @@ public class VisionSensor : MonoBehaviour
         var fighter = other.GetComponent<MeeleFighter>();
         if( fighter != null)
         {
-            enemy.TargetsInRange.Add(fighter);
+            //enemy.TargetsInRange.Add(fighter);
             //EnemyManager.i.AddEnemyInRange(enemy);
         }
     }
@@ -25,7 +25,7 @@ public class VisionSensor : MonoBehaviour
         var fighter = other.GetComponent<MeeleFighter>();
         if (fighter != null)
         {
-            enemy.TargetsInRange.Remove(fighter);
+            //enemy.TargetsInRange.Remove(fighter);
             //EnemyManager.i.RemoveEnemyInRange(enemy);
         }
     }

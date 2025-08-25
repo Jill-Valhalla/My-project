@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
+
 public class AttackState : State<EnemyController>
-{/*
+{
     [SerializeField] float attackDistance = 1f;
 
     bool isAttacking;
 
     EnemyController enemy;
+    
     public override void Enter(EnemyController owner)
     {
         enemy = owner;
 
         enemy.NavAgent.stoppingDistance = attackDistance;
     }
-
+    
     public override void Execute()
     {
         if(isAttacking)
@@ -24,13 +25,13 @@ public class AttackState : State<EnemyController>
         }
 
         enemy.NavAgent.SetDestination(enemy.Target.transform.position);
-
-        if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) <= attackDistance + 0.05f)
+        
+        if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) <= attackDistance + 0.03f)
         {
             StartCoroutine(Attack());
         }
     }
-
+    
     IEnumerator Attack()
     {
         isAttacking = true;
@@ -43,7 +44,7 @@ public class AttackState : State<EnemyController>
             yield return new WaitUntil(() => enemy.Fighter.AttackState == AttackStates.Cooldown);
             enemy.Fighter.TryToAttack();
         }*/
-    /*
+    
         yield return new WaitUntil(() => enemy.Fighter.AttackState == AttackStates.Idle);
 
         enemy.Animator.applyRootMotion = false;
@@ -56,6 +57,6 @@ public class AttackState : State<EnemyController>
     {
         enemy.NavAgent.ResetPath();
     }   */
-    
+}
     
 

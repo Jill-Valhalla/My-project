@@ -4,16 +4,17 @@ using System.Linq;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
-{/*
+{
     [SerializeField] Vector2 timeRangeBetweenAttacks = new Vector2(1, 4);
     public static EnemyManager i {  get; private set; }
+    
     private void Awake()
     {
         i = this;
     }
 
     private List<EnemyController> enemiesInRange = new List<EnemyController>();
-    float notAttackingTimer =2f;
+    float notAttackingTimer = 2f;
 
     public void AddEnemyInRange(EnemyController enemy)
     {
@@ -26,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     {
         enemiesInRange.Remove(enemy);
     }
-
+    
     private void Update()
     {
         if(enemiesInRange.Count == 0)
@@ -48,6 +49,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+    
     EnemyController SelectEnemyForAttack()
     {
         return enemiesInRange.OrderByDescending(e => e.CombatMovementTimer).FirstOrDefault();

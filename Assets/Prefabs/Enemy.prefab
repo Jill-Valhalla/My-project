@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 5455408736917998688}
   - component: {fileID: 3198192424029102773}
   - component: {fileID: 8454261181656951679}
+  - component: {fileID: 2044189157269488602}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -552,8 +553,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6985e160ec12c4cb55a79682d0c3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks: []
-  sword: {fileID: 0}
+  attacks:
+  - {fileID: 11400000, guid: a8babb5a40aff284aaeca3c4b9da2681, type: 2}
+  - {fileID: 11400000, guid: 49d97759b7e0e414aaebd88f93c1ca1f, type: 2}
+  sword: {fileID: 5537848490949066672}
 --- !u!143 &4882116702272771312
 CharacterController:
   m_ObjectHideFlags: 0
@@ -656,6 +659,19 @@ MonoBehaviour:
   adjustDistanceThreshold: 1
   idleTimeRange: {x: 2, y: 5}
   circlingTimeRange: {x: 3, y: 6}
+--- !u!114 &2044189157269488602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566214288215555330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be99559c68a3ff141a901d6637162db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 1
 --- !u!1 &1727811507092900307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,13 +3402,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2492405347099027081, guid: c663bcb846a903e4aaaf88ec484345db, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c663bcb846a903e4aaaf88ec484345db, type: 3}
+--- !u!1 &5537848490949066672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2492405347099027081, guid: c663bcb846a903e4aaaf88ec484345db, type: 3}
+  m_PrefabInstance: {fileID: 7947919486175975737}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5537848490949214368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2492405347098728857, guid: c663bcb846a903e4aaaf88ec484345db, type: 3}

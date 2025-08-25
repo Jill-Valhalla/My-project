@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyStates { Idle, CombatMovement }
+public enum EnemyStates { Idle, CombatMovement, Attack }
 
 public class EnemyController : MonoBehaviour
 {
@@ -11,14 +11,14 @@ public class EnemyController : MonoBehaviour
     public List<MeeleFighter> TargetsInRange {  get; set; } = new List<MeeleFighter>();
 
     public MeeleFighter Target { get; set; }
-    //public float CombatMovementTimer { get; set; } = 0f;
+    public float CombatMovementTimer { get; set; } = 0f;
     public StateMachine<EnemyController> StateMachine {  get; private set; }
 
     Dictionary<EnemyStates, State<EnemyController>> stateDict;
 
     public NavMeshAgent NavAgent { get; private set; }  
     public Animator Animator { get; private set; }
-    //public MeeleFighter Fighter { get; private set; }
+    public MeeleFighter Fighter { get; private set; }
     //public VisionSensor VisionSensor { get;  set; }
 
 
@@ -26,13 +26,13 @@ public class EnemyController : MonoBehaviour
     {
         NavAgent = GetComponent<NavMeshAgent>();
         Animator = GetComponent<Animator>();
-        //Fighter = GetComponent<MeeleFighter>();
+        Fighter = GetComponent<MeeleFighter>();
 
         stateDict = new Dictionary<EnemyStates, State<EnemyController>>();
         stateDict[EnemyStates.Idle] = GetComponent<IdleState>();
         stateDict[EnemyStates.CombatMovement] = GetComponent<CombatMovementState>();
         //stateDict[EnemyStates.CombatMovement] = GetComponent<CombatMovementState>();
-        //stateDict[EnemyStates.Attack] = GetComponent<AttackState>();
+        stateDict[EnemyStates.Attack] = GetComponent<AttackState>();
         //stateDict[EnemyStates.RetreatAfterAttack] = GetComponent<RetreatAfterAttackState>();
         //stateDict[EnemyStates.Dead] = GetComponent<DeadState>();
 
@@ -44,11 +44,11 @@ public class EnemyController : MonoBehaviour
     {
         StateMachine.ChangeState(stateDict[state]);
     }
-    /*
+    
     public bool IsInState(EnemyStates state)
     {
         return StateMachine.CurrentState == stateDict[state];
-    }  */
+    }  
 
     Vector3 prevPos;
     private void Update()

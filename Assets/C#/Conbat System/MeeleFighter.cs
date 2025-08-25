@@ -4,7 +4,7 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum AttackState {Idle, Windup, Impact, Cooldown}
+public enum AttackStates {Idle, Windup, Impact, Cooldown}
 
 public class MeeleFighter : MonoBehaviour
 {
@@ -41,7 +41,7 @@ public class MeeleFighter : MonoBehaviour
 
 
 
-    AttackState attackState;
+    public AttackStates AttackState { get; private set; }
     bool doCombo;
     int comboCount = 0;
 
@@ -53,7 +53,7 @@ public class MeeleFighter : MonoBehaviour
         {
             StartCoroutine(Attack());
         }
-        else if(attackState == AttackState.Impact || attackState == AttackState.Cooldown)
+        else if(AttackState == AttackStates.Impact || AttackState == AttackStates.Cooldown)
         {
             doCombo = true;
         }
@@ -62,7 +62,7 @@ public class MeeleFighter : MonoBehaviour
     IEnumerator Attack()
     {
         InAction = true;
-        attackState = AttackState.Windup;
+        AttackState = AttackStates.Windup;
 
 
 
@@ -77,23 +77,23 @@ public class MeeleFighter : MonoBehaviour
             timer += Time.deltaTime;
             float normalizedTime = timer / animState.length;
 
-            if(attackState == AttackState.Windup)
+            if(AttackState == AttackStates.Windup)
             {
                 if(normalizedTime >= attacks[comboCount].ImpactStartTime)
                 {
-                    attackState = AttackState.Impact;
+                    AttackState = AttackStates.Impact;
                     EnableHitbox(attacks[comboCount]);
                 }
             }
-            else if(attackState == AttackState.Impact)
+            else if(AttackState == AttackStates.Impact)
             {
                 if(normalizedTime >= attacks[comboCount].ImpactEndTime)
                 {
-                    attackState = AttackState.Cooldown;
+                    AttackState = AttackStates.Cooldown;
                     DisableAllColliders();
                 }
             }
-            else if(attackState == AttackState.Cooldown)
+            else if(AttackState == AttackStates.Cooldown)
             {
                 if (doCombo)
                 {
@@ -110,7 +110,7 @@ public class MeeleFighter : MonoBehaviour
         }
 
         
-        attackState = AttackState.Idle;
+        AttackState = AttackStates.Idle;
         comboCount = 0;
         InAction = false;
     }
@@ -166,11 +166,27 @@ public class MeeleFighter : MonoBehaviour
 
     void DisableAllColliders()
     {
-        swordCollider.enabled = false;
-        leftHandCollider.enabled = false;
-        rightHandCollider.enabled = false;
-        leftFootCollider.enabled = false;
-        rightFootCollider.enabled = false;
+        if(swordCollider != null)
+        {
+            swordCollider.enabled = false;
+        }
+        if(leftHandCollider != null)
+        {
+            leftHandCollider.enabled = false;
+        }
+        if(rightHandCollider != null)
+        {
+            rightHandCollider.enabled = false;
+        }
+        if(leftFootCollider != null)
+        {
+            leftFootCollider.enabled = false;
+        }
+        if(rightFootCollider != null)
+        {
+            rightFootCollider.enabled = false;
+        }
+        
     }
 
 

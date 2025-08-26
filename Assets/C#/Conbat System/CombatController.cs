@@ -16,16 +16,16 @@ public class CombatController : MonoBehaviour
     {
         if (Input.GetButtonDown("Attack"))
         {
-            /*var enemy = EnemyManager.i.GetAttackingEnemy();
+            var enemy = EnemyManager.i.GetAttackingEnemy();
             if (enemy != null && enemy.Fighter.IsCounterable && !meeleFighter.InAction)
             {
                 StartCoroutine(meeleFighter.PerformCounterAttack(enemy));
 
             }
             else
-            {*/
-            meeleFighter.TryToAttack();
-            //}
+            {
+                meeleFighter.TryToAttack();
+            }
 
                 
         }

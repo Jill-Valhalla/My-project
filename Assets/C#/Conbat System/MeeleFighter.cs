@@ -46,6 +46,7 @@ public class MeeleFighter : MonoBehaviour
     int comboCount = 0;
 
     public bool InAction { get; private set; } = false;
+    public bool InCounter { get; set; } = false;
 
     public void TryToAttack()
     {
@@ -79,6 +80,8 @@ public class MeeleFighter : MonoBehaviour
 
             if(AttackState == AttackStates.Windup)
             {
+                if (InCounter) break;
+
                 if(normalizedTime >= attacks[comboCount].ImpactStartTime)
                 {
                     AttackState = AttackStates.Impact;
@@ -137,6 +140,29 @@ public class MeeleFighter : MonoBehaviour
         InAction = false;
     }
 
+    public IEnumerator PerformCounterAttack(EnemyController opponent)
+    {
+        InAction = true;
+
+        InCounter = true;
+        opponent.Fighter.InCounter = true;
+        opponent.ChangeState(EnemyStates.Dead);
+
+        animator.CrossFade("CounterAttack", 0.2f);
+        opponent.Animator.CrossFade("CounterAttackVictim", 0.2f);
+        yield return null;
+
+        var animState = animator.GetNextAnimatorStateInfo(1);
+
+        yield return new WaitForSeconds(animState.length * 0.8f);
+
+        InCounter = false;
+        opponent.Fighter.InCounter = false;
+
+        InAction = false;
+    }
+
+
     void EnableHitbox(AttackData attack)
     {
         switch(attack.HitboxYoUse)
@@ -190,5 +216,7 @@ public class MeeleFighter : MonoBehaviour
     }
 
     public List<AttackData> Attacks => attacks;
+
+    public bool IsCounterable => AttackState == AttackStates.Windup && comboCount == 0;
 
 }

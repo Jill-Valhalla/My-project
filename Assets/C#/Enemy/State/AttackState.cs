@@ -24,6 +24,14 @@ public class AttackState : State<EnemyController>
             return;
         }
 
+        if (enemy.Target == null)
+        {
+            Debug.LogWarning("AttackState: Target is null, switching to CombatMovement.");
+            enemy.ChangeState(EnemyStates.CombatMovement);
+            return;
+        }
+
+
         enemy.NavAgent.SetDestination(enemy.Target.transform.position);
         
         if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) <= attackDistance + 0.03f)
@@ -34,29 +42,50 @@ public class AttackState : State<EnemyController>
     
     IEnumerator Attack()
     {
+        if (enemy == null || enemy.Target == null)
+        {
+            isAttacking = false; 
+            yield break; 
+        }
+
         isAttacking = true;
         enemy.Animator.applyRootMotion = true;
 
-        enemy.Fighter.TryToAttack();
+        if (enemy.Target != null)
+        {
+            enemy.Fighter.TryToAttack();
+        }
         /*
         for (int i = 1; i< comboCount; i++)
         {
             yield return new WaitUntil(() => enemy.Fighter.AttackState == AttackStates.Cooldown);
             enemy.Fighter.TryToAttack();
         }*/
-    
-        yield return new WaitUntil(() => enemy.Fighter.AttackState == AttackStates.Idle);
 
-        enemy.Animator.applyRootMotion = false;
-        isAttacking = false;
+        yield return new WaitUntil(() => enemy.Fighter.AttackState == AttackStates.Idle ||  enemy.Target == null);
 
-        //enemy.ChangeState(EnemyStates.RetreatAfterAttack);
+
+        if (enemy != null)
+        {
+            enemy.Animator.applyRootMotion = false;
+            isAttacking = false;
+
+            if (enemy.Target != null)
+            {
+                enemy.ChangeState(EnemyStates.RetreatAfterAttack);
+            }
+            else
+            {
+                
+                enemy.ChangeState(EnemyStates.CombatMovement);
+            }
+        }
     }
-    /*
+    
     public override void Exit()
     {
         enemy.NavAgent.ResetPath();
-    }   */
+    }   
 }
     
 

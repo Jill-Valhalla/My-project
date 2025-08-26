@@ -31,7 +31,16 @@ public class CombatMovementState : State<EnemyController>
 
     public override void Execute()
     {
-        if(Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) > distanceToStance + adjustDistanceThreshold)
+        if (enemy == null || enemy.Target == null)
+        {
+            
+            Debug.LogWarning("CombatMovementState: Enemy or Target is null, switching to Idle.");
+            enemy.ChangeState(EnemyStates.Idle);
+            return; 
+        }
+
+
+        if (Vector3.Distance(enemy.Target.transform.position, enemy.transform.position) > distanceToStance + adjustDistanceThreshold)
         {
             StartChase();
         }

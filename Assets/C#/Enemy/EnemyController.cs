@@ -17,6 +17,9 @@ public class EnemyController : MonoBehaviour
     Dictionary<EnemyStates, State<EnemyController>> stateDict;
 
     public NavMeshAgent NavAgent { get; private set; }  
+    public CharacterController CharacterController { get; private set; }  
+
+
     public Animator Animator { get; private set; }
     public MeeleFighter Fighter { get; private set; }
     public VisionSensor VisionSensor { get;  set; }
@@ -25,6 +28,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         NavAgent = GetComponent<NavMeshAgent>();
+        CharacterController = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
         Fighter = GetComponent<MeeleFighter>();
 

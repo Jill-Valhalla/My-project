@@ -34,6 +34,7 @@ public class PlayerContotller : MonoBehaviour
     {
         if (meeleFighter.InAction)
         {
+            targetRotation = transform.rotation;
             animator.SetFloat("forwardSpeed", 0f);
             return;
         }

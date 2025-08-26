@@ -189,5 +189,6 @@ public class MeeleFighter : MonoBehaviour
         
     }
 
+    public List<AttackData> Attacks => attacks;
 
 }

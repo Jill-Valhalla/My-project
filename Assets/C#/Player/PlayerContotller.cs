@@ -27,7 +27,7 @@ public class PlayerContotller : MonoBehaviour
 
         cameraController = Camera.main.GetComponent<CameraController>();    
         animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>(); 
         meeleFighter = GetComponent<MeeleFighter>();
     } 
     private void Update()

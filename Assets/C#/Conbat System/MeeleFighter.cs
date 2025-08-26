@@ -148,6 +148,11 @@ public class MeeleFighter : MonoBehaviour
         opponent.Fighter.InCounter = true;
         opponent.ChangeState(EnemyStates.Dead);
 
+        var dispVec = opponent.transform.position - transform.position;
+        dispVec.y = 0f;
+        transform.rotation = Quaternion.LookRotation(dispVec);
+        opponent.transform.rotation = Quaternion.LookRotation(-dispVec);
+
         animator.CrossFade("CounterAttack", 0.2f);
         opponent.Animator.CrossFade("CounterAttackVictim", 0.2f);
         yield return null;

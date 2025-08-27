@@ -8,8 +8,6 @@ public enum AttackStates {Idle, Windup, Impact, Cooldown}
 
 public class MeeleFighter : MonoBehaviour
 {
-    [field:SerializeField] public float Health { get; private set; } = 25f;
-
     [SerializeField] List<AttackData> attacks;
     [SerializeField] GameObject sword;
 
@@ -124,17 +122,9 @@ public class MeeleFighter : MonoBehaviour
     {
         if(other.tag == "Hitbox" && !InAction)
         {
-
-            TakeDamage(5f);
              StartCoroutine(PlayHitReaction());
         }
     }
-
-    void TakeDamage(float damage)
-    {
-        Health = Mathf.Clamp(Health - damage, 0, Health);
-    }
-
 
     IEnumerator PlayHitReaction()
     {

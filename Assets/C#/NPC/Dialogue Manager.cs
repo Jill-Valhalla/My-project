@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private float typingSpeed = 0.05f;
     [SerializeField] private float turnSpeed = 2f;
+    [SerializeField] private CameraController playerCameraController;
 
     private List<dialogueString> dialogueList;
     public bool IsDialogueActive { get; private set; }
@@ -52,9 +53,13 @@ public class DialogueManager : MonoBehaviour
         IsDialogueActive = true;
         dialogueParent.SetActive(true);
 
-        //firstPersonController.enabled = false;
         firstPersonController.SetMovementEnabled(false);
         if (playerMeeleFighter != null) playerMeeleFighter.enabled = false;
+
+        if (playerCameraController != null)
+        {
+            playerCameraController.enabled = false; 
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -171,6 +176,11 @@ public class DialogueManager : MonoBehaviour
         //firstPersonController.enabled = true;
         firstPersonController.SetMovementEnabled(true);
         if (playerMeeleFighter != null) playerMeeleFighter.enabled = true;
+
+        if (playerCameraController != null)
+        {
+            playerCameraController.enabled = true;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

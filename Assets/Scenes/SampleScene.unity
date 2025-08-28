@@ -11654,7 +11654,9 @@ MonoBehaviour:
   option2Button: {fileID: 1927271348}
   typingSpeed: 0.05
   turnSpeed: 2
+  playerCameraController: {fileID: 963194230}
   firstPersonController: {fileID: 1766417352}
+  playerMeeleFighter: {fileID: 1766417354}
 --- !u!1001 &1779182476
 PrefabInstance:
   m_ObjectHideFlags: 0

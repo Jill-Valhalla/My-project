@@ -89,4 +89,14 @@ public class PlayerContotller : MonoBehaviour
         Gizmos.DrawSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius);
     }
 
+    public void SetMovementEnabled(bool enabled)
+    {
+        this.enabled = enabled; 
+
+        if (!enabled && animator != null)
+        {
+            animator.SetFloat("forwardSpeed", 0f);
+        }
+    }
+
 }

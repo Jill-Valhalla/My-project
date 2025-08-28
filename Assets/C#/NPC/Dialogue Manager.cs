@@ -32,7 +32,9 @@ public class DialogueManager : MonoBehaviour
     public void DialogueStart(List<dialogueString> textToPrint, Transform NPC)
     {
         dialogueParent.SetActive(true);
-        firstPersonController.enabled = false;
+
+        //firstPersonController.enabled = false;
+        firstPersonController.SetMovementEnabled(false);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -146,7 +148,8 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
         dialogueParent.SetActive(false);
 
-        firstPersonController.enabled = true;
+        //firstPersonController.enabled = true;
+        firstPersonController.SetMovementEnabled(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

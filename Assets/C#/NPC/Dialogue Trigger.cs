@@ -9,15 +9,40 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private List<dialogueString> dialogueStrings = new List<dialogueString>();
     [SerializeField] private Transform NPCTransform;
 
-    private bool hasSpoken = false; 
+    private bool hasSpoken = false;
+
+    private void OnEnable()
+    {
+        DialogueManager.OnDialogueEnd += ResetDialogueState;
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.OnDialogueEnd -= ResetDialogueState;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasSpoken)
         {
-            other.gameObject.GetComponent<DialogueManager>().DialogueStart(dialogueStrings, NPCTransform);
-            hasSpoken = true; 
+            DialogueManager dm = other.gameObject.GetComponent<DialogueManager>();
+            if (dm != null)
+            {
+                dm.DialogueStart(dialogueStrings, NPCTransform);
+                hasSpoken = true;
+            }
+            else
+            {
+                Debug.LogError("Can not find DialogueManager component");
+            }
         }
+
+    }
+
+    private void ResetDialogueState()
+    {
+        hasSpoken = false;
+        Debug.Log("ResetDialogueState");
     }
 }
 [System.Serializable]

@@ -150,6 +150,10 @@ public class DialogueManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        OnDialogueEnd?.Invoke();
     }
+
+    public static System.Action OnDialogueEnd;
 
 }

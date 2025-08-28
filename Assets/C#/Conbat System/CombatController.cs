@@ -18,6 +18,11 @@ public class CombatController : MonoBehaviour
 
     private void Update()
     {
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Attack"))
         {
             var enemy = EnemyManager.i.GetAttackingEnemy();

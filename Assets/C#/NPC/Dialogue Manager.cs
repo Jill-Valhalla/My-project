@@ -16,12 +16,30 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float turnSpeed = 2f;
 
     private List<dialogueString> dialogueList;
+    public bool IsDialogueActive { get; private set; }
 
     [Header("Player")]
     [SerializeField] private PlayerContotller firstPersonController;
+    [SerializeField] private MeeleFighter playerMeeleFighter;
     private Transform playerCamera; 
 
     private int currentDialogueIndex = 0;
+
+    public static DialogueManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+    }
 
     private void Start()
     {
@@ -31,10 +49,12 @@ public class DialogueManager : MonoBehaviour
 
     public void DialogueStart(List<dialogueString> textToPrint, Transform NPC)
     {
+        IsDialogueActive = true;
         dialogueParent.SetActive(true);
 
         //firstPersonController.enabled = false;
         firstPersonController.SetMovementEnabled(false);
+        if (playerMeeleFighter != null) playerMeeleFighter.enabled = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -150,11 +170,13 @@ public class DialogueManager : MonoBehaviour
 
         //firstPersonController.enabled = true;
         firstPersonController.SetMovementEnabled(true);
+        if (playerMeeleFighter != null) playerMeeleFighter.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         OnDialogueEnd?.Invoke();
+        IsDialogueActive = false;
     }
 
     public static System.Action OnDialogueEnd;

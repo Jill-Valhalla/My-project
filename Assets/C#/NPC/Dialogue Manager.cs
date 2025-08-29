@@ -7,14 +7,29 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private GameObject dialogueParent;
-    [SerializeField] private TMP_Text dialogueText;
-    [SerializeField] private Button option1Button;
-    [SerializeField] private Button option2Button;
+    [Header("Character Dialogue UI Components")]
+    [SerializeField] private TMP_Text characterDialogueText;
+    [SerializeField] private Button characterOption1Button;
+    [SerializeField] private Button characterOption2Button;
+
+    [Header("Notice Board UI Components")]
+    [SerializeField] private TMP_Text noticeBoardText;
+    [SerializeField] private Button noticeBoardOption1Button;
+    [SerializeField] private Button noticeBoardOption2Button;
+
+    private TMP_Text currentDialogueText;
+    private Button currentOption1Button;
+    private Button currentOption2Button;
 
     [SerializeField] private float typingSpeed = 0.05f;
     [SerializeField] private float turnSpeed = 2f;
     [SerializeField] private CameraController playerCameraController;
+
+    [Header("UI References")]
+    [SerializeField] private GameObject characterDialogueUI; 
+    [SerializeField] private GameObject noticeBoardUI;
+
+    private GameObject currentDialogueUI;
 
     private List<dialogueString> dialogueList;
     public bool IsDialogueActive { get; private set; }
@@ -44,14 +59,39 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        dialogueParent.SetActive(false);
+        if (characterDialogueUI != null) characterDialogueUI.SetActive(false);
+        if (noticeBoardUI != null) noticeBoardUI.SetActive(false);
+        //if (dialogueParent != null) dialogueParent.SetActive(false);
         playerCamera = Camera.main.transform;
     }
 
-    public void DialogueStart(List<dialogueString> textToPrint, Transform NPC)
+    public void DialogueStart(List<dialogueString> textToPrint, Transform NPC, DialogueType dialogueType = DialogueType.CharacterDialogue)
     {
+        SetDialogueUI(dialogueType);
+
+        switch (dialogueType)
+        {
+            case DialogueType.CharacterDialogue:
+                currentDialogueText = characterDialogueText;
+                currentOption1Button = characterOption1Button;
+                currentOption2Button = characterOption2Button;
+                break;
+            case DialogueType.NoticeBoard:
+                currentDialogueText = noticeBoardText;
+                currentOption1Button = noticeBoardOption1Button;
+                currentOption2Button = noticeBoardOption2Button;
+                break;
+        }
+
+        // 【确保组件不为空】
+        if (currentDialogueText == null)
+        {
+            Debug.LogError("Dialogue text component is not assigned!");
+            return;
+        }
+
         IsDialogueActive = true;
-        dialogueParent.SetActive(true);
+        //dialogueParent.SetActive(true);
 
         firstPersonController.SetMovementEnabled(false);
         if (playerMeeleFighter != null) playerMeeleFighter.enabled = false;
@@ -74,13 +114,39 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(PrintDialogue());
     }
 
+    private void SetDialogueUI(DialogueType type)
+    {
+        
+        if (characterDialogueUI != null) characterDialogueUI.SetActive(false);
+        if (noticeBoardUI != null) noticeBoardUI.SetActive(false);
+
+        
+        switch (type)
+        {
+            case DialogueType.CharacterDialogue:
+                currentDialogueUI = characterDialogueUI;
+                break;
+            case DialogueType.NoticeBoard:
+                currentDialogueUI = noticeBoardUI;
+                break;
+        }
+
+        if (currentDialogueUI != null)
+        {
+            currentDialogueUI.SetActive(true);
+            //dialogueParent = currentDialogueUI; 
+        }
+    }
+
     private void DisableButtons()
     {
-        option1Button.interactable = false;
-        option2Button.interactable = false;
+        if (currentOption1Button != null) currentOption1Button.interactable = false;
+        if (currentOption2Button != null) currentOption2Button.interactable = false;
 
-        option1Button.GetComponentInChildren<TMP_Text>().text = "No option";
-        option2Button.GetComponentInChildren<TMP_Text>().text = "No option";
+        if (currentOption1Button != null)
+            currentOption1Button.GetComponentInChildren<TMP_Text>().text = "No option";
+        if (currentOption2Button != null)
+            currentOption2Button.GetComponentInChildren<TMP_Text>().text = "No option";
     }
 
     private IEnumerator TurnCameraTowardsNPC(Transform NPC)
@@ -113,14 +179,22 @@ public class DialogueManager : MonoBehaviour
             {
                 yield return StartCoroutine(TypeText(line.text));
 
-                option1Button.interactable = true;
-                option2Button.interactable = true;
+                if (currentOption1Button != null) currentOption1Button.interactable = true;
+                if (currentOption2Button != null) currentOption2Button.interactable = true;
 
-                option1Button.GetComponentInChildren<TMP_Text>().text = line.answerOption1;
-                option2Button.GetComponentInChildren<TMP_Text>().text = line.answerOption2;
+                if (currentOption1Button != null)
+                    currentOption1Button.GetComponentInChildren<TMP_Text>().text = line.answerOption1;
+                if (currentOption2Button != null)
+                    currentOption2Button.GetComponentInChildren<TMP_Text>().text = line.answerOption2;
 
-                option1Button.onClick.AddListener(()=> HandeleOptionSelected(line.option1IndexJump));
-                option2Button.onClick.AddListener(()=> HandeleOptionSelected(line.option2IndexJump));
+                if (currentOption1Button != null)
+                    currentOption1Button.onClick.RemoveAllListeners();
+                if (currentOption2Button != null)
+                    currentOption2Button.onClick.RemoveAllListeners();
+                if (currentOption1Button != null)
+                    currentOption1Button.onClick.AddListener(() => HandeleOptionSelected(line.option1IndexJump));
+                if (currentOption2Button != null)
+                    currentOption2Button.onClick.AddListener(() => HandeleOptionSelected(line.option2IndexJump));
 
                 yield return new WaitUntil(() => optionSeleted);
             }
@@ -148,21 +222,24 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
-        dialogueText.text = "";
+        if (currentDialogueText != null)
+            currentDialogueText.text = "";
         foreach (char letter in text.ToCharArray())
         {
-            dialogueText.text += letter;
+            if (currentDialogueText != null)
+                currentDialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        if(!dialogueList[currentDialogueIndex].isQuestion)
+        if (currentDialogueIndex < dialogueList.Count && !dialogueList[currentDialogueIndex].isQuestion)
         {
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         }
 
-        if(dialogueList[currentDialogueIndex].isEnd)
+        if (currentDialogueIndex < dialogueList.Count && dialogueList[currentDialogueIndex].isEnd)
         {
             DialogueStop();
+            yield break; 
         }
         currentDialogueIndex++;
     }
@@ -170,8 +247,10 @@ public class DialogueManager : MonoBehaviour
     private void DialogueStop()
     {
         StopAllCoroutines();
-        dialogueText.text = "";
-        dialogueParent.SetActive(false);
+        if (currentDialogueText != null)
+            currentDialogueText.text = "";
+        //dialogueText.text = "";
+        //dialogueParent.SetActive(false);
 
         //firstPersonController.enabled = true;
         firstPersonController.SetMovementEnabled(true);
@@ -180,6 +259,11 @@ public class DialogueManager : MonoBehaviour
         if (playerCameraController != null)
         {
             playerCameraController.enabled = true;
+        }
+
+        if (currentDialogueUI != null)
+        {
+            currentDialogueUI.SetActive(false);
         }
 
         Cursor.lockState = CursorLockMode.Locked;

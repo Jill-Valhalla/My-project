@@ -5,12 +5,13 @@ using UnityEngine.Events;
 
 public class DialogueTriggerTest : MonoBehaviour
 {
-    [SerializeField] private List<string> dialogueLines = new List<string>();
+    [SerializeField] private List<dialogueString> dialogueLines = new List<dialogueString>();
     [SerializeField] private GameObject interactHint;
 
     [Header("Dialogue Lists for Stages")]
-    public List<string> dialogueStage0;
-    public List<string> dialogueStage2;
+    public List<dialogueString> dialogueStage0;
+    public List<dialogueString> dialogueStage2;
+    //public List<dialogueString> dialogueLines;
 
     private bool hasSpoken = false;
     private bool isPlayerInRange = false;
@@ -20,7 +21,7 @@ public class DialogueTriggerTest : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) )
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E)&& !DialogueManager.Instance.IsDialogueActive)
         {
             
             if (CanTriggerDialogue())
@@ -36,7 +37,7 @@ public class DialogueTriggerTest : MonoBehaviour
         if (interactHint != null)
             interactHint.SetActive(false);
 
-        List<string> linesToShow = dialogueLines;
+        List<dialogueString> linesToShow = dialogueLines;
 
         if (gameObject.name == "A")
         {
@@ -46,8 +47,10 @@ public class DialogueTriggerTest : MonoBehaviour
                 linesToShow = dialogueStage2;
         }
 
-        foreach (string line in linesToShow)
-            Debug.Log(line);
+        if (linesToShow != null && linesToShow.Count > 0)
+        {
+            DialogueManager.Instance.DialogueStart(linesToShow, transform, DialogueType.CharacterDialogue);
+        }
 
         endDialogueEvent?.Invoke();
     }

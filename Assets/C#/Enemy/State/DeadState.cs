@@ -11,5 +11,7 @@ public class DeadState : State<EnemyController>
 
         owner.NavAgent.enabled = false;
         owner.CharacterController.enabled = false;
+
+        QuestManager.Instance.dialogueStage = 2;
     }
 }

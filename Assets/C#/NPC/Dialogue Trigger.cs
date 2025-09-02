@@ -43,13 +43,16 @@ public class DialogueTrigger : MonoBehaviour
         
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && !hasSpoken)
         {
-            DialogueManager dm = FindObjectOfType<DialogueManager>();
-            if (dm != null && !dm.IsDialogueActive)
+            if (CheckDialogueStage())
             {
-                dm.DialogueStart(dialogueStrings, NPCTransform, dialogueType);
-                hasSpoken = true;
-                if (interactHint != null)
-                    interactHint.SetActive(false);
+                DialogueManager dm = FindObjectOfType<DialogueManager>();
+                if (dm != null && !dm.IsDialogueActive)
+                {
+                    dm.DialogueStart(dialogueStrings, NPCTransform, dialogueType);
+                    hasSpoken = true;
+                    if (interactHint != null)
+                        interactHint.SetActive(false);
+                }
             }
         }
     }
@@ -86,6 +89,22 @@ public class DialogueTrigger : MonoBehaviour
             interactHint.SetActive(true);
         }
     }
+
+    private bool CheckDialogueStage()
+    {
+        
+        if (gameObject.name == "A_NPC")
+        {
+            return QuestManager.Instance.dialogueStage == 0 || QuestManager.Instance.dialogueStage == 2;
+        }
+       
+        else if (gameObject.name == "B_NPC")
+        {
+            return QuestManager.Instance.dialogueStage == 1;
+        }
+        return true;
+    }
+
 }
 [System.Serializable]
 public class dialogueString
@@ -93,8 +112,6 @@ public class dialogueString
     public string text;
     public bool isEnd;
 
-    //[Header("Dialog Type")] 
-    //public DialogType dialogType = DialogType.CharacterDialogue;
 
     [Header("Branch")]
     public bool isQuestion;

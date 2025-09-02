@@ -249,10 +249,7 @@ public class DialogueManager : MonoBehaviour
         StopAllCoroutines();
         if (currentDialogueText != null)
             currentDialogueText.text = "";
-        //dialogueText.text = "";
-        //dialogueParent.SetActive(false);
 
-        //firstPersonController.enabled = true;
         firstPersonController.SetMovementEnabled(true);
         if (playerMeeleFighter != null) playerMeeleFighter.enabled = true;
 
